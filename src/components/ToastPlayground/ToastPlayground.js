@@ -1,25 +1,32 @@
-import React, { useContext, useState } from "react";
-
+import React, { useContext, useEffect, useState } from "react";
+import { ToastContext } from "../ToastProvider/ToastProvider";
+import ToastShelf from "../ToastShelf/ToastShelf";
 import Button from "../Button";
 
 import styles from "./ToastPlayground.module.css";
-import ToastShelf from "../ToastShelf/ToastShelf";
-import { ToastContext } from "../ToastProvider/ToastProvider";
 
 const VARIANT_OPTIONS = ["notice", "warning", "success", "error"];
 
 function ToastPlayground() {
   const { addToast } = useContext(ToastContext);
 
-  const [alertVariant, setAlertVariant] = useState("notice");
+  const [alertVariant, setAlertVariant] = useState(VARIANT_OPTIONS[0]);
   const [message, setMessage] = useState("");
+  const [disabled, setDisabled] = useState(true);
   const [showToast, setShowToast] = useState(false);
+
+  useEffect(() => {
+    if (message.length >= 4) {
+      return setDisabled(false);
+    }
+    return setDisabled(true);
+  }, [message]);
 
   function handleSubmit(event) {
     event.preventDefault();
     addToast(message, alertVariant);
     setShowToast(true);
-    setAlertVariant("notice");
+    setAlertVariant(VARIANT_OPTIONS[0]);
     setMessage("");
   }
 
@@ -77,7 +84,7 @@ function ToastPlayground() {
           <div className={styles.row}>
             <div className={styles.label} />
             <div className={`${styles.inputWrapper} ${styles.radioWrapper}`}>
-              <Button>Pop Toast!</Button>
+              <Button disabled={disabled}>Pop Toast!</Button>
             </div>
           </div>
         </form>

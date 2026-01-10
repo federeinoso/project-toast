@@ -1,11 +1,11 @@
 import React from "react";
-
-import Toast from "../Toast";
-import styles from "./ToastShelf.module.css";
 import { ToastContext } from "../ToastProvider/ToastProvider";
+import Toast from "../Toast";
+
+import styles from "./ToastShelf.module.css";
 
 function ToastShelf() {
-  const { toastArray, deleteToast } = React.useContext(ToastContext);
+  const { toastArray } = React.useContext(ToastContext);
   return (
     <ol className={styles.wrapper}>
       {toastArray.map((toast) => (
@@ -13,7 +13,6 @@ function ToastShelf() {
           <Toast
             variant={toast.alertVariant}
             message={toast.message}
-            deleteToast={deleteToast}
             id={toast.id}
           />
         </li>

@@ -19,14 +19,14 @@ const ToastProvider = ({ children }) => {
   }
 
   function deleteToast(id) {
-    setToastArray((prev) => prev.filter((toast) => toast.id !== id));
+    const nextToastsArray = toastArray.filter((toast) => toast.id !== id);
+    setToastArray(nextToastsArray);
   }
 
   return (
     <ToastContext.Provider
       value={{
         toastArray,
-        setToastArray,
         deleteToast,
         addToast,
       }}
